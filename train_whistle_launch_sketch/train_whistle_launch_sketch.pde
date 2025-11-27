@@ -6,24 +6,43 @@ Train train;
 
 //declare a SoundFile
 SoundFile whistle;
+SoundFile ding;
+
+
+
+//declare timer variable
+float timerLength = 50; //number to count up to
+float time = 0; //current time
+
+
 
 void setup() {
   size(400, 400);
+
   //load the sound effect from the data folder
-whistle = new SoundFile(this,"train-whistle.wav" );
+  whistle = new SoundFile(this, "train-whistle.wav" );
+  ding = new SoundFile(this, "pling.wav");
 
   train = new Train(random(100, 300), random(0.5, 2));
+     background(255);
 }
 
 void draw() {
-  background(255);
+  time += 1;
+  if(time>timerLength){
+    time =0;
+    //dosomething
+    ding.play();
+     background(random(255),random(255),random(255));
+  }
+ 
 
   train.update();
 }
 
 void keyPressed() {
   //press space to toot the horn! But don't allow it to keep starting
- if(key == ' ' && !whistle.isPlaying()){
-  whistle.play();
- }
+  if (key == ' ' && !whistle.isPlaying()) {
+    whistle.play();
+  }
 }
